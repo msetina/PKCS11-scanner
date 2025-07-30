@@ -1,0 +1,80 @@
+[build-system]
+requires = [
+    "setuptools>=67.4",
+    "wheel",
+    "swig"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PKCS11-scanner"
+description = "Helper classes to scan and list cryptography keys, certificates and mechanisms"
+authors = [{name = "Miha Šetina", email = "miha.setina@gmail.com"}]
+maintainers = [{name = "Miha Šetina", email = "miha.setina@gmail.com"}]
+license = "BSD-3-Clause"
+keywords = [
+    "cryptography",    
+    "pkcs11",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.10"
+dependencies = [    
+    "PKCS11-cryptography-keys>=0.0.6",
+    "PyKCS11>=1.5.14",    
+]
+version = "0.0.1"
+
+[project.readme]
+file = "README.rst"
+content-type = "text/x-rst"
+
+[project.urls]
+Homepage = "https://github.com/msetina/PKCS11-scanner"
+"Source Code" = "https://github.com/msetina/PKCS11-scanner"
+"Issue Tracker" = "https://github.com/msetina/PKCS11-scanner/issues"
+
+[project.optional-dependencies]
+testing = [
+    "PKCS11-scanner",
+    "pytest>=6.1.1",
+    "pytest-cov>=4.0,<6.1",
+]
+mypy = [
+    "PKCS11-scanner",
+    "types-PyYAML",
+]
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+include = ["pkcs11_scanner*"]
+exclude = ["pkcs11_scanner_tests*"]
+
+[tool.setuptools.package-data]
+pkcs11_scanner = ["py.typed"]
+
+[tool.mypy]
+files = "pkcs11_scanner"
+
+[[tool.mypy.overrides]]
+module = ["PyKCS11.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+log_cli = true
+log_cli_level = "INFO"
+norecursedirs = "testdata"
+testpaths = "pkcs11_scanner_tests"
