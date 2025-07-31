@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-      - run: pip install --upgrade pip mypy PyKCS11 cryptography
+      - run: pip install --upgrade pip mypy pkcs11_cryptography_keys
       - name: setup prerequisites (linux)
         shell: bash
         run: sudo apt install swig
