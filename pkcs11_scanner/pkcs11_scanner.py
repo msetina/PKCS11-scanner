@@ -110,36 +110,37 @@ class PKCS11Scanner(object):
             tp = TokenProperties.read_from_slot(self._library, sl)
             if tp.is_login_required():
                 login_required = True
-            sp = SlotProperties.read_from_slot(self._library, sl)
-            for tag, val in sp.gen_tags():
-                slot[tag] = val
-            slot["token"] = {}
-            # slot["token"]["max_pin_length"] = tp.get_max_pin_length()
-            # slot["token"]["min_pin_length"] = tp.get_min_pin_length()
-            for tag, val in tp.gen_tags():
-                slot["token"][tag] = val
-            slot["token"]["private keys"] = await self.__read_keys(
-                self._library, sl, "private", login_required, pin
-            )
-            slot["token"]["public keys"] = await self.__read_keys(
-                self._library, sl, "public", login_required, pin
-            )
-            slot["token"]["certificates"] = await self.__read_keys(
-                self._library,
-                sl,
-                "certificate",
-                login_required,
-                pin,
-            )
-            slot["token"]["mechanisms"] = {}
-            for mp in MechanismProperties.gen_mechanism_properties(
-                self._library, sl
-            ):
-                slot["token"]["mechanisms"][mp.get_mechanism_type()] = {}
-                for tag, val in mp.gen_tags():
-                    slot["token"]["mechanisms"][mp.get_mechanism_type()][
-                        tag
-                    ] = val
-            ret["slots"].append(slot)
+            if tp.is_initialized():
+                sp = SlotProperties.read_from_slot(self._library, sl)
+                for tag, val in sp.gen_tags():
+                    slot[tag] = val
+                slot["token"] = {}
+                # slot["token"]["max_pin_length"] = tp.get_max_pin_length()
+                # slot["token"]["min_pin_length"] = tp.get_min_pin_length()
+                for tag, val in tp.gen_tags():
+                    slot["token"][tag] = val
+                slot["token"]["private keys"] = await self.__read_keys(
+                    self._library, sl, "private", login_required, pin
+                )
+                slot["token"]["public keys"] = await self.__read_keys(
+                    self._library, sl, "public", login_required, pin
+                )
+                slot["token"]["certificates"] = await self.__read_keys(
+                    self._library,
+                    sl,
+                    "certificate",
+                    login_required,
+                    pin,
+                )
+                slot["token"]["mechanisms"] = {}
+                for mp in MechanismProperties.gen_mechanism_properties(
+                    self._library, sl
+                ):
+                    slot["token"]["mechanisms"][mp.get_mechanism_type()] = {}
+                    for tag, val in mp.gen_tags():
+                        slot["token"]["mechanisms"][mp.get_mechanism_type()][
+                            tag
+                        ] = val
+                ret["slots"].append(slot)
 
         return ret
