@@ -133,8 +133,8 @@ class TestCertificates:
 
     @mark.asyncio
     async def test_X509_scan(self):
-        from pkcs11_scanner.pkcs11_X509_scanner import PKCS11X506Scanner
         from pkcs11_scanner import PKCS11Scan
+        from pkcs11_scanner.pkcs11_X509_scanner import PKCS11X506Scanner
 
         scanner = PKCS11X506Scanner.from_library_path(_pkcs11lib, None, True)
         data = await scanner.scan_from_library()
@@ -145,8 +145,8 @@ class TestCertificates:
 
     @mark.asyncio
     async def test_card_scan(self):
-        from pkcs11_scanner.pkcs11_card_scanner import PKCS11CardScanner
         from pkcs11_scanner import PKCS11Scan
+        from pkcs11_scanner.pkcs11_card_scanner import PKCS11CardScanner
 
         scanner = PKCS11CardScanner.from_library_path(_pkcs11lib)
         data = await scanner.scan_from_library()
@@ -157,8 +157,8 @@ class TestCertificates:
 
     @mark.asyncio
     async def test_base_scan(self):
-        from pkcs11_scanner.pkcs11_scanner import PKCS11Scanner
         from pkcs11_scanner import PKCS11Scan
+        from pkcs11_scanner.pkcs11_scanner import PKCS11Scanner
 
         scanner = PKCS11Scanner.from_library_path(_pkcs11lib)
         data = await scanner.scan_from_library()
