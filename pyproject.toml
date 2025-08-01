@@ -48,7 +48,7 @@ testing = [
     "PKCS11-scanner",
     "pytest>=6.1.1",
     "pytest-asyncio>=1.1.0",
-    "pytest-cov>=4.0,<6.1",
+    "pytest-cov>=4.0,<6.3",
 ]
 mypy = [
     "PKCS11-scanner",
